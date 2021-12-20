@@ -1,7 +1,9 @@
 # GameOfLife
 Conway's Game of Life in Python with PyGame and scrolling
 
-This is an unbounded implementation of GOL in Python. By "unbounded," I mean that it is not limited to the size of the screen. It only requires PyGame to be installed if you do not already have it.
+This is an unbounded implementation of GOL in Python. By "unbounded," I mean that it is not limited to the size of the screen. Cells can can move in any direction indefinitely and the number of cells is limited only by the amount of avaialable memory.
+
+The only dependency is PyGame, which needs to be installed if you do not already have it (you should, it's awesome!).
 
 I am not using a fixed-sized list for the cell data. This would not be practical to allow for the cells to grow and move indefinitely in any direction. The data structure I chose to hold the cells of interest is a Python dictionary. The key for each entry is a tuple of the (X, Y) grid position of the cell. The value is a list containing three elements: the cell's current state; it next state; and a running count of the number of live neighboring cells.
 
