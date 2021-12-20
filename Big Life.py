@@ -86,9 +86,9 @@ def update_cell(cell_parm):
 				if not (x == x0 and y == y0):
 					# if (x, y) in cells:
 					cells[(x, y)][NUM_NEIGHBORS] -= 1
-					if cells[(x, y)][CURR_STATE] == 0 and cells[(x, y)][NUM_NEIGHBORS] == 0:
-						# Neighbor is inactive and has no active neighbors, so remove
-						cells_to_remove.append((x, y))
+				if cells[(x, y)][CURR_STATE] == 0 and cells[(x, y)][NUM_NEIGHBORS] == 0:
+					# Neighbor is inactive and has no active neighbors, so remove
+					cells_to_remove.append((x, y))
 	if curr_cell[CURR_STATE] == 1:
 		curr_cell[NUM_NEIGHBORS] -= 1  # Don't count itself
 		live_cells += 1
