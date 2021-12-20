@@ -64,9 +64,9 @@ def remove_cells():
     global cells_to_remove
     # Remove inactive cells with no neighbors
     for curr_cell in cells_to_remove:
-        if cells[curr_cell][CURR_STATE] == 0 and cells[curr_cell][NUM_NEIGHBORS] == 0:
-            cells.pop(curr_cell)
-    cells_to_remove.clear()
+        if curr_cell in cells:
+            if cells[curr_cell][CURR_STATE] == 0 and cells[curr_cell][NUM_NEIGHBORS] == 0:
+                cells.pop(curr_cell)
 
 
 def set_next_state(cell_parm: tuple):
@@ -186,6 +186,7 @@ while running:
         frame += 1
 
         cells_to_update.clear()     # Clear list prior to each generation
+        cells_to_remove.clear()
 
         # Evaluate all cells for next state
         for cell in cells:
