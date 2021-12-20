@@ -8,6 +8,16 @@ HEIGHT = 1000
 COLOR = [(0, 0, 0), (255, 255, 255)]
 
 # "Adjustable" constants (during runtime using keys)
+import pygame as pg
+from random import randint
+
+# Display window size
+WIDTH = 1900
+HEIGHT = 1000
+
+COLOR = [(0, 0, 0), (255, 255, 255)]
+
+# "Adjustable" constants (during runtime using keys)
 CELL_SIZE = 7
 FPS = 1000.0
 
@@ -108,7 +118,6 @@ def update_cell(cell_parm: tuple):
                     cells[(x, y)][NUM_NEIGHBORS] += 1
             else:
                 if not (x == x0 and y == y0):
-                    # if (x, y) in cells:
                     cells[(x, y)][NUM_NEIGHBORS] -= 1
                 if cells[(x, y)][CURR_STATE] == 0 and cells[(x, y)][NUM_NEIGHBORS] == 0:
                     # Neighbor is inactive and has no active neighbors, so remove
