@@ -8,16 +8,6 @@ HEIGHT = 1000
 COLOR = [(0, 0, 0), (255, 255, 255)]
 
 # "Adjustable" constants (during runtime using keys)
-import pygame as pg
-from random import randint
-
-# Display window size
-WIDTH = 1900
-HEIGHT = 1000
-
-COLOR = [(0, 0, 0), (255, 255, 255)]
-
-# "Adjustable" constants (during runtime using keys)
 CELL_SIZE = 7
 FPS = 1000.0
 
@@ -40,7 +30,6 @@ NUM_NEIGHBORS = 2
 def create_random():
     # Create random cells
     for i in range(30000):
-        # grid_x, grid_y = randint(-num_cols // 2, num_cols // 2), randint(-num_rows // 2, num_rows // 2)
         grid_x, grid_y = randint(top_left[0], top_left[0] + num_cols), randint(top_left[1], top_left[1] + num_rows)
         if (grid_x, grid_y) not in cells:
             cells[(grid_x, grid_y)] = [1, 1, 0]
