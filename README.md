@@ -5,7 +5,7 @@ This is an unbounded implementation of GOL in Python. By "unbounded," I mean tha
 
 The only dependency is PyGame, which needs to be installed if you do not already have it (you should, it's awesome!).
 
-I am not using a fixed-sized list for the cell data. This would not be practical to allow for the cells to grow and move indefinitely in any direction. The data structure I chose to hold the cells of interest is a Python dictionary. The key for each entry is a tuple of the (X, Y) grid position of the cell. The value is a list containing three elements: the cell's current state; it next state; and a running count of the number of live neighboring cells.
+I am not using a fixed-sized list for the cell data. This would not be practical to allow for the cells to grow and move indefinitely in any direction. The data structure I chose to hold the cells of interest is a Python dictionary. The key for each entry is a tuple of the (X, Y) grid position of the cell. The value is a list containing three elements: the cell's current state; its next state; and a running count of the number of live neighboring cells.
 
 When you run the program, it starts off with an empty screen and the simulator paused. You can use the mouse to click on the screen and toggle the state of the cell at that position. Initially, the cell size is 1, which is not very convenient for trying to create a specific pattern. There are keys to change the displayed cell size (see below). There are constants defined at the beginning of the program where you can set the initial values for things, including the display size in pixels.
 
