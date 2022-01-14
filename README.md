@@ -1,5 +1,5 @@
 # GameOfLife
-Conway's Game of Life in Python with PyGame and scrolling
+Conway's Game of Life in Python (Unlimited Size) with PyGame
 
 This is an unbounded implementation of GOL in Python. By "unbounded," I mean that it is not limited to the size of the screen. Cells can can move in any direction indefinitely and the number of cells is limited only by the amount of avaialable memory.
 
