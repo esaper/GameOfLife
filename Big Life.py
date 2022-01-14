@@ -13,7 +13,7 @@ CELL_SIZE = 7
 FPS = 1000.0
 
 # Rules
-Rules = {"Conway's Game of Life": ([3], [2, 3]),
+RULES = {"Conway's Game of Life": ([3], [2, 3]),
          "3-4 Life": ([3, 4], [3, 4]),
          "Amoeba": ([3, 5, 7], [1, 3, 5, 8]),
          "Coagulations": ([3, 7, 8], [2, 3, 5, 6, 7, 8]),
@@ -36,8 +36,9 @@ Rules = {"Conway's Game of Life": ([3], [2, 3]),
          }
 
 # Choose which rule to use from the dictionary above
-RULE = Rules["Conway's Game of Life"]
-BIRTH_LIST, SURVIVE_LIST = RULE
+rule_name = "Conway's Game of Life"
+rule = RULES[rule_name]
+BIRTH_LIST, SURVIVE_LIST = rule
 
 # Initial display range
 num_rows = HEIGHT // (CELL_SIZE + 1)
@@ -77,18 +78,19 @@ def move_screen(center_point: tuple):
     num_rows = HEIGHT // (CELL_SIZE + 1)
     num_cols = WIDTH // (CELL_SIZE + 1)
     top_left = (center_point[0] - (num_cols // 2), center_point[1] - (num_rows // 2))
+    # Clear the screen
     screen.fill((0, 0, 0))
-    for curr_cell in cells:
-        if cells[curr_cell][CURR_STATE] == 1:
-            draw_cell(curr_cell[0], curr_cell[1], 1)
+    # Redraw active cells
+    for x, y in cells:
+        if cells[(x, y)][CURR_STATE] == 1:
+            draw_cell(x, y, 1)
     pg.display.flip()
 
 
 def remove_cells():
-    global cells_to_remove
     # Remove inactive cells with no neighbors
     for curr_cell in cells_to_remove:
-        if cells[curr_cell][CURR_STATE] == 0 and cells[curr_cell][NUM_NEIGHBORS] == 0:
+        if curr_cell in cells and cells[curr_cell][CURR_STATE] == 0 and cells[curr_cell][NUM_NEIGHBORS] == 0:
             cells.pop(curr_cell)
 
 
@@ -107,9 +109,10 @@ def toggle_cell(mouse_pos: tuple):
     x = mouse_pos[0] // (CELL_SIZE + 1) + top_left[0]
     y = mouse_pos[1] // (CELL_SIZE + 1) + top_left[1]
     try:
-        curr_cell = cells[(x, y)]
-        curr_cell[NEXT_STATE] = 1 - curr_cell[CURR_STATE]
+        # If cell exists, toggle state
+        cells[(x, y)][NEXT_STATE] = 1 - cells[(x, y)][CURR_STATE]
     except KeyError:
+        # Create new cell
         cells[(x, y)] = [1, 1, 0]
     update_cell((x, y))
     remove_cells()
@@ -122,24 +125,25 @@ def update_cell(cell_parm: tuple):
     curr_cell = cells[cell_parm]
     curr_cell[CURR_STATE] = curr_cell[NEXT_STATE]
     # Update each of current cell's neighbors' num_neighbors based on current cell's state
-    for y in range(y0 - 1, y0 + 2):
-        for x in range(x0 - 1, x0 + 2):
-            if curr_cell[CURR_STATE] == 1:
+    if curr_cell[CURR_STATE] == 1:
+        for y in range(y0 - 1, y0 + 2):
+            for x in range(x0 - 1, x0 + 2):
                 try:
+                    # If cell exists, add 1 to neighbor count
                     cells[(x, y)][NUM_NEIGHBORS] += 1
                 except KeyError:
                     # Create cell for neighbor
                     cells[(x, y)] = [0, 0, 1]
-            else:
+        curr_cell[NUM_NEIGHBORS] -= 1  # Don't count itself
+        live_cells += 1
+    else:
+        for y in range(y0 - 1, y0 + 2):
+            for x in range(x0 - 1, x0 + 2):
                 if (x, y) != (x0, y0):
                     cells[(x, y)][NUM_NEIGHBORS] -= 1
                 if cells[(x, y)][CURR_STATE] == 0 and cells[(x, y)][NUM_NEIGHBORS] == 0:
                     # Neighbor is inactive and has no active neighbors, so remove
                     cells_to_remove.add((x, y))
-    if curr_cell[CURR_STATE] == 1:
-        curr_cell[NUM_NEIGHBORS] -= 1  # Don't count itself
-        live_cells += 1
-    else:
         live_cells -= 1
     draw_cell(x0, y0, curr_cell[CURR_STATE])
 
@@ -236,6 +240,6 @@ while running:
         pg.display.flip()
         clock.tick(int(FPS))
 
-        pg.display.set_caption(f"Current Frame: {frame:6d}     FPS: {clock.get_fps():3.2f}     " +
+        pg.display.set_caption(f"{rule_name}     Current Frame: {frame:6d}     FPS: {clock.get_fps():3.2f}     " +
                                f"Live Cells: {live_cells:6d}     Eval List: {len(cells):6d}     " +
                                f"Updates: {len(cells_to_update)}     Center: {center}")
