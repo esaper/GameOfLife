@@ -36,4 +36,6 @@ Note the initial cell size and frame rate are specified at the top of the progra
 
 The window caption displays some interesting information so you can see how the sim is progressing. On my computer, which is fairly new (Intel i7-11700K, 32GB RAM), with about 7000 live cells and a dictionary containing over 50000 cells of interest, I am getting better than 40 frames per second. Your mileage may vary.
 
+I recently added another version, "Big Life 2", which uses a series of bits to represent each cell's values (0bCNnnnn, where C is current state, N is next state and nnnn is the number of neighbors) rather than the list ([current state, next state, num. neighbors]). I wanted to see if there was any performance to be gained doing it that way. I'm still playing with it to make that determination.
+
 As a final note, I am relatively new to Python, certainly not an expert. I am well aware that I did not set up a main() function and use the "IF __main__ == 'main'" construct, and that I used a numnber of global variables which is less than desirable. This was meant as a stand-alone program and I was trying to keep things as simple as possible. I am sure there are more "Pythonic" ways of doing things here. I would love any feedback as to how to improve this code. Hopefully, it's not total trash.
